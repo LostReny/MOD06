@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class CheckCollision : MonoBehaviour
 {
+    public GameObject fire;
+
+    // quando ligar o objeto fogo não vai estar ligado
+    public void Awake(){
+        fire.SetActive(false);
+    }
 
     #region Collision
     // checking collision on time only 
@@ -12,6 +18,7 @@ public class CheckCollision : MonoBehaviour
         Debug.Log("Collision Enter" + collision.gameObject.name);
         // destroi quando entrar em colisao
         Destroy(gameObject);
+         fire.SetActive(false);
     }
 
     // checking collision every frame that´s collision is happening
@@ -22,6 +29,7 @@ public class CheckCollision : MonoBehaviour
     // checking when exit collision on time only 
     private void OnCollisionExit(Collision collision){
         Debug.Log("Collision Exit" + collision.gameObject.name);
+         fire.SetActive(false);
     }
     #endregion
 
@@ -32,6 +40,7 @@ public class CheckCollision : MonoBehaviour
      
      private void OnTriggerEnter(Collider collider){
         Debug.Log("Trigger Enter" + collider.gameObject.name);
+        fire.SetActive(true);
      }
 
      private void OnTriggerStay(Collider collider){
@@ -40,6 +49,7 @@ public class CheckCollision : MonoBehaviour
 
      private void OnTriggerExit(Collider collider){
         Debug.Log("Trigger Exit" + collider.gameObject.name);
+        fire.SetActive(false);
      }
 
     #endregion
