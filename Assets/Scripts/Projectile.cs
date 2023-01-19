@@ -8,11 +8,33 @@ public class Projectile : MonoBehaviour
     [Header("direction")]
     public Vector3 dir;
     public int speed;
+
+    public GameObject projectile;
+    public float timeToDestroy;
     #endregion
 
-    // Update is called once per frame
+    // here we take put the dir, speed of the projectile 
+    // we change the numbers in unity inspector 
     void Update()
     {
         transform.Translate(dir * speed *Time.deltaTime);
+    }
+
+// in the method awake - before the script start
+    /*void Awake(){
+        if (projectile != null){
+            Destroy(projectile, timeToDestroy);
+        }*/
+
+     /*    Destroy(projectile, timeToDestroy);
+            
+    }*/
+
+    public void StartProjectiile() {
+        Invoke(nameof(FinishedUsed), timeToDestroy);
+    }
+
+    private void FinishedUsed(){
+        gameObject.SetActive(false);
     }
 }

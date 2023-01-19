@@ -12,6 +12,8 @@ public class Player : MonoBehaviour
     [Header("GameObject")]
     public GameObject Projectile;
     public Transform Shotter;
+
+    public PoolManager poolManager;
     
     #endregion
 
@@ -31,6 +33,8 @@ public class Player : MonoBehaviour
         }
      #endregion   
 
+
+    // if we press mouse button we use method spawItem
     #region Shotting
     if(Input.GetMouseButtonDown(0)){
         SpawnItem();
@@ -39,9 +43,16 @@ public class Player : MonoBehaviour
     #endregion
     }
 
+    // spawitem is used to instantiate the prefab/gameobj projectile in the shooter position
     #region Instantiate
     public void SpawnItem(){
-        var obj = Instantiate(Projectile);
+
+        var obj = poolManager.GetPoolEdObject();
+
+        obj.SetActive(true);
+        obj.GetComponent<Projectile>().StartProjectiile();
+        obj.transform.SetParent(null);
+        // var obj = Instantiate(Projectile);
         obj.transform.position = Shotter.transform.position;
     }
     #endregion
