@@ -14,6 +14,8 @@ public class Player : MonoBehaviour
     public Transform Shotter;
 
     public PoolManager poolManager;
+
+    public int deadNumber = 0;
     
     #endregion
 
@@ -51,9 +53,15 @@ public class Player : MonoBehaviour
 
         obj.SetActive(true);
         obj.GetComponent<Projectile>().StartProjectiile();
+        obj.GetComponent<Projectile>().OnHitTarget = CountDeads;
         obj.transform.SetParent(null);
         // var obj = Instantiate(Projectile);
         obj.transform.position = Shotter.transform.position;
+    }
+
+    private void CountDeads(){
+        deadNumber++;
+        Debug.Log("Dead" +deadNumber);
     }
     #endregion
 
