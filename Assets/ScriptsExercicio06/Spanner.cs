@@ -8,10 +8,18 @@ public class Spanner : MonoBehaviour
 
    public Vector3 Fdir;
 
-   private void SpannerItem(){
-    var obj = Instantiate(prefab, transform);
+   public NewPool newpool;
 
-    obj.GetComponent<Rigidbody>().AddForce(Fdir);
+   public float timeToDestroy;
+
+
+   private void SpannerItem(){
+      prefab.GetComponent<Rigidbody>().AddForce(Fdir);
+
+      var obj = newpool.GetPoolObject();
+      obj.SetActive(true);
+      obj.transform.SetParent(null);
+   
    }
 
     private void Update() {
@@ -19,4 +27,13 @@ public class Spanner : MonoBehaviour
             SpannerItem();
         }  
    }
+
+   public void StartPrefab() {
+        Invoke(nameof(FinishedUsed), timeToDestroy);
+    } 
+
+    private void FinishedUsed(){
+        gameObject.SetActive(false);
+    }
+
 }
