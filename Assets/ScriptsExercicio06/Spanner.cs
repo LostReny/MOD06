@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Spanner : MonoBehaviour
 {
-   public GameObject prefab;
+   public GameObject pObj;
 
    public Vector3 Fdir;
 
@@ -12,14 +12,24 @@ public class Spanner : MonoBehaviour
 
    public float timeToDestroy;
 
+   public float delayTime;
+
+   public Transform startPoint;
+
 
    private void SpannerItem(){
-      prefab.GetComponent<Rigidbody>().AddForce(Fdir);
 
       var obj = newpool.GetPoolObject();
-      obj.SetActive(true);
-      obj.transform.SetParent(null);
-   
+
+    if(obj != null){
+        obj.SetActive(true);
+        obj.GetComponent<Rigidbody>().AddForce(Fdir);
+        obj.transform.SetParent(null);
+        obj.transform.position = startPoint.transform.position;
+        //chamando a coroutina
+         StartCoroutine(FineshedUsingObjectCoroutine(obj,timeToDestroy));
+    }
+     
    }
 
     private void Update() {
@@ -28,12 +38,10 @@ public class Spanner : MonoBehaviour
         }  
    }
 
-   public void StartPrefab() {
-        Invoke(nameof(FinishedUsed), timeToDestroy);
-    } 
-
-    private void FinishedUsed(){
-        gameObject.SetActive(false);
+    // utilizar Coroutine para desativar o objeto chamando o Set.Active
+    private IEnumerator FineshedUsingObjectCoroutine(GameObject pObj, float delayTime){
+        yield return new WaitForSeconds(delayTime);
+        pObj.SetActive(false);
     }
 
 }
