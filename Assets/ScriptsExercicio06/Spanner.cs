@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Spanner : MonoBehaviour
 {
+   #region "Variables" 
    public GameObject pObj;
 
    public Vector3 Fdir;
@@ -15,6 +16,7 @@ public class Spanner : MonoBehaviour
    public float delayTime;
 
    public Transform startPoint;
+   #endregion
 
 
    private void SpannerItem(){
@@ -38,10 +40,11 @@ public class Spanner : MonoBehaviour
         }  
    }
 
+#region "Coroutine"
     // utilizar Coroutine para desativar o objeto chamando o Set.Active
     private IEnumerator FineshedUsingObjectCoroutine(GameObject pObj, float delayTime){
         yield return new WaitForSeconds(delayTime);
         pObj.SetActive(false);
     }
-
+#endregion
 }
